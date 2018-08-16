@@ -8,7 +8,10 @@ import { EventBusService } from '@services/event-bus.service';
   styleUrls: ['./message-list.component.css']
 })
 export class MessageListComponent implements OnInit, OnDestroy {
-  userList: any =[]; // 用户列表
+  userList: any =[{
+    clientName: 'lxdsss',
+    clientId: 2
+  }]; // 用户列表
   connection_userlist: any;
   connection_curruser: any;
   connection_msg: any;

@@ -45,7 +45,34 @@ ul {
   clear: both;
   visibility: hidden;
 }
-
+.avatar-color{
+  width:40px;
+	height:40px;
+	border-radius:50%;
+  text-align:center;
+	line-height: 35px;
+  /* margin:0 10px; */
+  color:#fff;
+  display: inline-block;
+}
+.avatar-color0{
+	background:#a9d2f2;
+}
+.avatar-color1{
+	background:#a9d2f2;
+}
+.avatar-color2{
+	background:#c5b3eb;
+}
+.avatar-color3{
+	background:#f3b2b2;
+}
+.avatar-color4{
+	background:#a7dbc2;
+}
+.avatar-color5{
+	background:#f7d4a3;
+}
 
 
 

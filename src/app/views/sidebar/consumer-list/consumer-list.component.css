@@ -1,0 +1,41 @@
+.m-list li {
+  padding: 8px 12px;
+  border-bottom: 1px solid #292C33;
+  cursor: pointer;
+  transition: background-color .1s;
+}
+.m-list .name {
+  display: inline-block;
+  margin: 0 0 0 15px;
+}
+
+.consumer-header{
+  margin: 15% 15%;
+  border-bottom: 1px solid #c3c3cc;
+  overflow: hidden;
+}
+
+
+
+.consumer-detail{
+  margin: 30px 12%;
+  font-size: 12px;
+}
+.consumer-detail ul li{
+  margin: 18px;
+}
+.consumer-detail ul li label{
+  margin-right: 30px;
+  color: #a5a5a9;
+}
+
+.consumer-btn{
+  text-align: center;
+}
+.consumer-btn .send-msg{
+  padding: 12px 50px;
+  background: #10a210;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+}

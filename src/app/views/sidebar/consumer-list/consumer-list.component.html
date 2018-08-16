@@ -6,13 +6,43 @@
   </div> 
   <div class="m-list">
     <ul>
-        <li *ngFor="let item of allUserList">
-            <img class="avatar" width="30" height="30" [alt]="item.clientId" src="/assets/images/1.jpg">
+        <li *ngFor="let item of allUserList" (click)="chooseUser(item)">
+            <!-- <img class="avatar" width="30" height="30" [alt]="item.clientId" src="/assets/images/1.jpg"> -->
+            <!-- <p class="name">{{item.clientName}}</p> -->
+            <span class="avatar-color avatar-color3">{{ item.clientName | slice:0:1}}</span>
             <p class="name">{{item.clientName}}</p>
+
         </li>
     </ul>
   </div>
 </div>
 <div class="main">
-
+  <div *ngIf="userDetail.clientId">
+    <div class="consumer-header">
+      <h3 class="fl">{{ userDetail.clientName }}</h3>
+      <div class="fr">
+          <img class="avatar" width="60" height="60" src="/assets/images/3.jpg">
+      </div>
+      
+    </div>
+    <div class="consumer-detail">
+      <ul>
+        <li>
+          <label for="">备注名</label> {{ userDetail.clientName }}
+        </li>
+        <li>
+          <label for="">地 &nbsp; 区</label> {{ userDetail.clientArea }}
+        </li>
+        <li>
+          <label for="">微信号</label> {{ userDetail.clientId }}
+        </li>
+        <li>
+          <label for="">来 &nbsp; 源</label> 通过手机通讯录添加
+        </li>
+      </ul>
+    </div>
+    <div class="consumer-btn">
+      <button type="button" class="send-msg" (click)="sendMessageFn()">发消息</button>
+    </div>
+  </div>
 </div>

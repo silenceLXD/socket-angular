@@ -29,16 +29,13 @@ export class WebsocketService {
     // 客户端在监听服务器推送的 'load_current_user'事件, 监听当前用户信息。
     this.io.emit('load_current_user');
     // this.io.on('load_current_user',(data) => this._currentUser$.next(data));
-
-    // 客户端在监听服务器推送的 'load_user_list'事件, 监听在线人员列表。
-    // this.io.emit('load_user_list');
-    // this.io.on('load_user_list',(list) => this._list$.next(list));
-
-    // 这里为什么进行额外的转换，请看历史文章： Rxjs 之 asObservable
-    //  this.message$ = this._message$.asObservable();
-    //  this.list$ = this._list$.asObservable();
-    //  this.currentUser$ = this._currentUser$.asObservable();
   }
+
+  /**
+   * disp_prompt()
+   * 初始化 连接服务端socket
+   * 输入连接用户名
+   */ 
   disp_prompt() {
     var name = prompt("请输入您的名字","")
     if (name!=null && name!="") {
@@ -46,7 +43,9 @@ export class WebsocketService {
       this.io = SocketIO('ws://172.18.6.168:8081?clientName='+name);
     }
   }
+
   /**
+   * sendMessage()
    * 发送消息
    * @param message 
    */
@@ -89,7 +88,8 @@ export class WebsocketService {
      }; 
     })   
     return observable;
-   } 
+   }
+
    /**
     * loadCurrentUser()
     * 监听当前用户信息 load_current_user
@@ -104,8 +104,12 @@ export class WebsocketService {
      }; 
     })   
     return observable;
-   } 
+   }
 
+   /**
+    * offline()
+    * 监听用户离线消息 offline_chat_message
+    */
    offline() {
     let observable = new Observable(observer => {
      this.io.on('offline_chat_message', (data) => {
