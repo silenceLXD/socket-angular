@@ -1,0 +1,64 @@
+/* 人员列表 */
+.m-list li {
+  padding: 12px 15px;
+  border-bottom: 1px solid #292C33;
+  cursor: pointer;
+  transition: background-color .1s;
+}
+.m-list li:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+.m-list li.active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.m-list .avatar, .name {
+  vertical-align: middle;
+}
+.m-list .avatar {
+  border-radius: 2px;
+}
+.m-list .name {
+  display: inline-block;
+  margin: 0 0 0 15px;
+}
+.toolbar-a{
+  color: #9c9797;
+  font-size: 24px;
+  text-decoration: none;
+  margin: 0 12px;
+}
+
+/* .item-avatar{
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background: #9c9797
+} */
+.avatar-color{
+  width:40px;
+	height:40px;
+	border-radius:50%;
+  text-align:center;
+	line-height: 35px;
+  /* margin:0 10px; */
+  color:#fff;
+  display: inline-block;
+}
+.avatar-color0{
+	background:#a9d2f2;
+}
+.avatar-color1{
+	background:#a9d2f2;
+}
+.avatar-color2{
+	background:#c5b3eb;
+}
+.avatar-color3{
+	background:#f3b2b2;
+}
+.avatar-color4{
+	background:#a7dbc2;
+}
+.avatar-color5{
+	background:#f7d4a3;
+}

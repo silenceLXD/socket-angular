@@ -1,0 +1,26 @@
+<!--The content below is only a placeholder and can be replaced.-->
+ <div class="chat">
+  <!-- <input type="button" onclick="disp_prompt()" value="显示一个提示框" /> -->
+  <!-- 左侧列表 -->
+  <div class="sidetab">
+    <div class="header-avatar"><img class="avatar" width="40" height="40" src="/assets/images/3.jpg"></div>
+    <div class="m-tab">
+        <div class="tab_item">
+            <a class="fa fa-comment-o" routerLink="/message" title="聊天" routerLinkActive="green" (click)="chooseTabType('chat')" ></a>
+        </div>
+        <div class="tab_item">
+            <a class=" fa fa-user-o" routerLink="/consumer" title="通讯录" routerLinkActive="green"  (click)="chooseTabType('book')"></a>
+        </div>
+        <div class="tab_item">
+            <a class=" fa fa-cube" routerLink="/article" title="收藏" routerLinkActive="green" (click)="chooseTabType('cube')"></a>
+        </div>
+    </div>
+    <div class="sidebar-setting">
+        <a href="#" class="fa fa-reorder" title="设置" (click)="chooseTabType('set')"></a>
+    </div>
+  </div>
+    
+    <router-outlet></router-outlet>
+    
+ </div>
+

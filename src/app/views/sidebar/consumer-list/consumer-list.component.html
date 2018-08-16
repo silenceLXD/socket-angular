@@ -1,0 +1,18 @@
+<div class="sidebar">
+  <div class="m-card">
+    <footer>
+        <input class="search" type="text" placeholder="搜索">
+    </footer>
+  </div> 
+  <div class="m-list">
+    <ul>
+        <li *ngFor="let item of allUserList">
+            <img class="avatar" width="30" height="30" [alt]="item.clientId" src="/assets/images/1.jpg">
+            <p class="name">{{item.clientName}}</p>
+        </li>
+    </ul>
+  </div>
+</div>
+<div class="main">
+
+</div>
