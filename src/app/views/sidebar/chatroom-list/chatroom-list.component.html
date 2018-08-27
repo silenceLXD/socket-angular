@@ -1,0 +1,35 @@
+<div class="sidebar">
+  <div class="m-card creat-room">
+    <a href="#" (click)="creatChatRoomFn()"><i class="fa fa-plus-square-o"></i> 创建聊天室</a>
+
+  </div>
+</div>
+
+<div class="main">
+  <div class="choose-card">
+    <div el-row gutter="20" class="choose-row">
+      <div el-col [span]="12" class="choose-col border-right">
+        <ul>
+          <li *ngFor="let item of userLength" class="text item choose-list">
+            <p><el-checkbox [model]="item.checked" (modelChange)="chooseUserFn($event,item)"><span style="margin-left:50px; ">{{'用户 ' + item.name }} </span></el-checkbox> </p>
+          </li>  
+        </ul>
+      </div>
+      <div el-col [span]="12" class="choose-col">
+          <div>已选联系人</div>
+          <ul>
+            <li *ngFor="let item of choosedUser" class="text item">
+              <p style="padding: 8px;"><span>{{'已选 ' + item.name }}</span>  <span class="fr el-icon-circle-close" (click)="removeFn(item)"></span></p>
+            </li> 
+          </ul>
+        </div>
+    </div>
+
+    <div style="text-align: right;">
+        <el-button type="primary" (click)="creatChatRoomFn()">开始群聊</el-button>
+    </div>
+  </div>
+
+  
+    
+</div>

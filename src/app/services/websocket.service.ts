@@ -121,4 +121,28 @@ export class WebsocketService {
     })   
     return observable;
    } 
+
+   /**
+    * chatroomCreate()
+    * 创建聊天室事件 chatroom_create
+    */
+   chatroomCreate(name){
+    this.io.emit('chatroom_create', name);
+   }
+   
+   /**
+    * chatroomListMmessage()
+    * 监听聊天室列表的消息 chatroom_list_message
+    */
+   chatroomListMmessage() {
+    let observable = new Observable(observer => {
+      this.io.on('chatroom_list_message', (data) => {
+       observer.next(data);  
+      });
+      return () => {
+       this.io.disconnect();
+      }; 
+     })   
+     return observable;
+   }
 }

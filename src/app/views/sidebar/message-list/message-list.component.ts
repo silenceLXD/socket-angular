@@ -8,10 +8,7 @@ import { EventBusService } from '@services/event-bus.service';
   styleUrls: ['./message-list.component.css']
 })
 export class MessageListComponent implements OnInit, OnDestroy {
-  userList: any =[{
-    clientName: 'lxdsss',
-    clientId: 2
-  }]; // 用户列表
+  userList: any =[]; // 用户列表
   connection_userlist: any;
   connection_curruser: any;
   connection_msg: any;
@@ -31,6 +28,10 @@ export class MessageListComponent implements OnInit, OnDestroy {
     clientName:'',
     sessionId:''
   };
+
+  // 新消息提醒(num)
+  hasNewMsg: any = {};
+  
   constructor(private websocketService: WebsocketService,
   private _eventBus: EventBusService) {
 
@@ -42,6 +43,9 @@ export class MessageListComponent implements OnInit, OnDestroy {
         console.log(value)
     });
     this._eventBus.userListData.subscribe(value => {
+      value.forEach(item => {
+        this.hasNewMsg[item.clientId] = 0;
+      });
       this.userList = value;
       console.log(value)
     });
@@ -53,6 +57,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
     this.connection_msg = this.websocketService.getMessages().subscribe(message => {
       const _messagelist:any = message;
       this.messagesList.push(_messagelist);
+      this.hasNewMsg[_messagelist.clientId] += 1;
       this.msgScroll();
     })
   }
@@ -73,6 +78,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
         clientName: item.clientName,
         sessionId: item.sessionId
       };
+      this.hasNewMsg[item.clientId] = 0;
     }
   }
 

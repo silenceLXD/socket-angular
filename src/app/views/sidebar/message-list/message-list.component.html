@@ -10,7 +10,9 @@
         <li *ngFor="let item of userList" [ngClass]="item.clientId == targetSelectData.clientId ? 'active' : ''" (click)="select(item)">
             <!-- <img class="avatar" width="30" height="30" [alt]="item.clientId" src="/assets/images/1.jpg"> -->
             <span class="avatar-color avatar-color0">{{ item.clientName | slice:0:1}}</span>
+            <span class="message-num" *ngIf="hasNewMsg[item.clientId] > 0">{{ hasNewMsg[item.clientId] }}</span>
             <p class="name" [ngClass]="!item.online?'gray':''">{{item.clientName}}</p>
+            
         </li>
     </ul>
   </div>
