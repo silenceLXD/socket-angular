@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WebsocketService } from '@services/websocket.service';
 import { EventBusService } from '@services/event-bus.service';
 
@@ -7,14 +7,11 @@ import { EventBusService } from '@services/event-bus.service';
   templateUrl: './message-list.component.html',
   styleUrls: ['./message-list.component.css']
 })
-export class MessageListComponent implements OnInit, OnDestroy {
+export class MessageListComponent implements OnInit {
   userList: any =[]; // 用户列表
   connection_userlist: any;
   connection_curruser: any;
-  connection_msg: any;
-
-  messagesList = []; // 消息列表
-  Inputmessage: any = '';
+  
    // 当前用户信息
    selfData = {
     clientId: '',
@@ -28,13 +25,10 @@ export class MessageListComponent implements OnInit, OnDestroy {
     clientName:'',
     sessionId:''
   };
-
-  // 新消息提醒(num)
-  hasNewMsg: any = {};
-  
+  hasNewMsg:any = {};
   constructor(private websocketService: WebsocketService,
   private _eventBus: EventBusService) {
-
+    // this.websocketService.getLoadUserList();
   }
 
   ngOnInit() {
@@ -42,31 +36,18 @@ export class MessageListComponent implements OnInit, OnDestroy {
         this.selfData = value;
         console.log(value)
     });
-    this._eventBus.userListData.subscribe(value => {
-      value.forEach(item => {
-        this.hasNewMsg[item.clientId] = 0;
+    
+    this.connection_userlist = this.websocketService.getLoadUserList_respond().subscribe(list => {
+      const _userlist:any = list;
+      _userlist.data.forEach(item => {
+        // this.hasNewMsg[item.clientId] = 0;
       });
-      this.userList = value;
-      console.log(value)
-    });
-    // this.connection_userlist = this.websocketService.loadUserList().subscribe(list => {
-    //   const _userlist:any = list;
-    //   this.userList = _userlist.data;
-    // })
-
-    this.connection_msg = this.websocketService.getMessages().subscribe(message => {
-      const _messagelist:any = message;
-      this.messagesList.push(_messagelist);
-      this.hasNewMsg[_messagelist.clientId] += 1;
-      this.msgScroll();
+      this.userList = _userlist.data;
     })
+
+    
   }
-  // ngAfterViewInit() {
-  //   this._eventBus.userListData.subscribe(value => {
-  //     this.userList = value;
-  //     console.log(value)
-  //   });
-  // }
+  
   /**
    * 选择要发送消息的对象
    * @param item 选择对象
@@ -78,32 +59,13 @@ export class MessageListComponent implements OnInit, OnDestroy {
         clientName: item.clientName,
         sessionId: item.sessionId
       };
-      this.hasNewMsg[item.clientId] = 0;
+      // this.hasNewMsg[item.clientId] = 0;
     }
+  }
+  getHasNewMsg(val) {
+    this.hasNewMsg = val;
   }
 
-  /**
-   * 发送消息
-   * @param msg 消息内容
-   */
-  sendMsFn($event, msg: string) {
-    if(msg && $event.keyCode == 13){
-      var jsonObject = {
-        sourceClientId: this.selfData.clientId,
-        targetClientId: this.targetSelectData.clientId,
-        msg: msg,
-        clientId: this.targetSelectData.clientId,
-        clientName: this.targetSelectData.clientName,
-        date: new Date(),
-        img: '/assets/images/1.jpg',
-        self: true
-      };
-      this.messagesList.push(jsonObject);
-      this.websocketService.sendMessage(jsonObject);
-      this.msgScroll();
-      this.Inputmessage = '';
-    }
-  }
   
   /**
    * 产生随机数函数
@@ -115,21 +77,6 @@ export class MessageListComponent implements OnInit, OnDestroy {
         rnd+=Math.floor(Math.random()*10);
     return rnd;
   }
-  /**
-   * 滚动到底部
-   */
-  msgScroll(){
-    setTimeout(function () {
-      var _el = document.getElementById('message-con');
-      // _el.scrollTop = _el.scrollHeight;
-      _el.scrollTop = _el.scrollHeight - _el.clientHeight;
-    }, '100');
-  }
-  /**
-   * 组件注销
-   */
-  ngOnDestroy() {
-    // this.connection_userlist.unsubscribe();
-   }
-
+ 
+  
 }

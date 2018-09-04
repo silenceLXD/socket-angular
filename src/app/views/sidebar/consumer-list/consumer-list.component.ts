@@ -8,35 +8,20 @@ import { EventBusService } from '@services/event-bus.service';
   styleUrls: ['./consumer-list.component.css']
 })
 export class ConsumerListComponent implements OnInit, OnDestroy {
-  allUserList: any = [{
-    clientName: 'lxd11',
-    clientId: 2,
-    clientArea: '北京'
-  },{
-    clientName: 'lxd22',
-    clientId: 3,
-    clientArea: '郑州'
-  },{
-    clientName: 'lxd33',
-    clientId: 4,
-    clientArea: '上海'
-  },{
-    clientName: 'lxd44',
-    clientId: 5,
-    clientArea: '重庆'
-  }]; // 用户列表
-  consumer_userlist: any;
+  allUserList: any; // 用户列表
+  consumer_alluserlist: any;
   
   constructor(private websocketService: WebsocketService,
-    private _eventBus: EventBusService) { }
+    private _eventBus: EventBusService) { 
+      // this.websocketService.getLoadUserList();
+    }
 
   ngOnInit() {
-    this._eventBus.userListData.subscribe(value => {
-      this.allUserList = value;
-    });
-    this._eventBus.loginUserData.subscribe(value => {
-      console.log(value)
-    });
+    
+    this.consumer_alluserlist = this.websocketService.getAllUserList_respond().subscribe(list => {
+      const _userlist:any = list;
+      this.allUserList = _userlist;
+    })
   }
 
   /**
@@ -44,9 +29,9 @@ export class ConsumerListComponent implements OnInit, OnDestroy {
    * @param list 
    */ 
   userDetail: any = {
-    clientName: '',
-    clientId: '',
-    clientArea: ''
+    userName: '',
+    userId: '',
+    userArea: ''
   };
   chooseUser(list: any) {
     this.userDetail = list;
@@ -56,6 +41,6 @@ export class ConsumerListComponent implements OnInit, OnDestroy {
     alert("不许聊天")
   }
   ngOnDestroy() {
-    // this.consumer_userlist.unsubscribe();
+    // this.consumer_alluserlist.unsubscribe();
    }
 }

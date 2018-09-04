@@ -21,15 +21,6 @@
   display: inline-block;
   margin: 0 0 0 15px;
 }
-.toolbar-a{
-  color: #9c9797;
-  font-size: 24px;
-  text-decoration: none;
-  margin: 0 12px;
-}
-.toolbar-a:hover{
-  color: #07b907;
-}
 
 /* .item-avatar{
   display: inline-block;

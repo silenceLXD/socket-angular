@@ -1,3 +1,42 @@
-<p>
-  chat-message-list works!
-</p>
+  <div class="m-message" id="message-con">
+    <div class="chat-with" *ngIf="targetSelectData.sessionId || targetSelectData.roomId">{{ targetSelectData.clientName || targetSelectData.roomName }}
+        <a *ngIf="chatType=='groupchat'" class="fa fa-user fr toolbar-a" style="font-size:24px;" (click)="searchMember(targetSelectData.roomId)"></a>
+        <div class="member-list" *ngIf="chatType=='groupchat' && chatRoomMember">
+            <ul><li *ngFor="let member of chatRoomMember"> {{ member.userName }} </li></ul>
+        </div>
+    </div>
+    <ul>
+        <li *ngFor="let item of messagesList | filterMessage:targetSelectData.clientId">
+            <p class="time"><span>{{ item.date | date:'HH:mm:ss' }}</span></p>
+            <div class="main" [ngClass]="item.self ? 'self' : ''">
+                <!-- <img class="avatar" width="30" height="30" [src]="item.img" /> -->
+                <span class="avatar avatar-color avatar-color1"></span>
+                <div class="text">{{ item.msg }}</div>
+            </div>
+        </li>
+    </ul>
+  </div>
+
+  <!-- 工具条 -->
+  <div class="m-toolbar">
+      <div class="toolbar-item">
+          <div class="fl">
+              <a href="#" class="fa fa-smile-o toolbar-a" title="表情"></a>
+              <a href="#" class="fa fa-folder-o toolbar-a" title="附件"></a>
+              <a href="#" class="fa fa-scissors toolbar-a" title="截图"></a>
+              <a href="#" class="fa fa-commenting-o toolbar-a" title="查找聊天内容"></a>
+          </div>
+          <div class="fr">
+              <a href="#" class="fa fa-phone toolbar-a" title="语音聊天"></a>
+              <a href="#" class="fa fa-video-camera toolbar-a" title="视频聊天"></a>
+          </div>
+          
+      </div>
+  </div>
+  <!-- 发送消息 -->
+  <div class="m-text">
+  <!-- <pre class="edit-area"></pre> -->
+    <!-- <textarea name="message" placeholder="按 Enter 发送" #message></textarea> -->
+    <input type="text" placeholder="发送消息" [(ngModel)]="Inputmessage" (keyup)="sendMsFn($event,Inputmessage)">
+    <!-- <button (click)="sendMsFn(Inputmessage)">发 送</button> -->
+  </div>

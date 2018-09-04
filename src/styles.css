@@ -85,6 +85,7 @@ ul {
   float: left;
   width: 200px;
   color: #f4f4f4;
+  overflow: auto;
   background-color: #2e3238;
 }
 .m-card{
@@ -304,7 +305,7 @@ ul {
   color: #07b907 !important;
 }
 .chat-with{
-  text-align: center;
+  /* text-align: center; */
   /* margin: 10px auto; */
   border-bottom: 1px solid #d8d6d6;
   padding: 12px 0;

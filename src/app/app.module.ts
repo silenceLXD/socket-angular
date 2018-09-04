@@ -4,15 +4,15 @@ import { FormsModule }   from '@angular/forms';
 import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
 // import module
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ElModule } from 'element-angular'
 
 // import { WebsocketService } from '@services/websocket.service';
 // import { EventBusService } from '@services/event-bus.service';
 
 import { FilterMessagePipe } from '@pipes/filter-message.pipe';
-import { ChatListSideComponent } from './layout/chat-list-side/chat-list-side.component';
-import { ChatMessageListComponent } from './layout/chat-message-list/chat-message-list.component';
-import { ChatMessageInputComponent } from './layout/chat-message-input/chat-message-input.component';
+
+import { ChatMessageListComponent } from './views/main/chat-message-list/chat-message-list.component';
 
 //用户列表
 import { ConsumerListComponent } from './views/sidebar/consumer-list/consumer-list.component';
@@ -33,9 +33,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     FilterMessagePipe,
-    ChatListSideComponent,
     ChatMessageListComponent,
-    ChatMessageInputComponent,
     
     ConsumerListComponent,
     MessageListComponent,
@@ -46,6 +44,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes,{useHash:true}),
     BrowserModule,
     FormsModule,
+    BrowserAnimationsModule,
     ElModule.forRoot()
   ],
   providers: [

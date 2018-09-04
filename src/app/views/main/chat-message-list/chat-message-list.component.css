@@ -1,0 +1,28 @@
+
+.toolbar-a{
+  color: #9c9797;
+  font-size: 24px;
+  text-decoration: none;
+  margin: 0 12px;
+}
+.toolbar-a:hover{
+  color: #07b907;
+}
+
+/* .item-avatar{
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background: #9c9797
+} */
+.member-list{
+  position: absolute;
+  background: #ececec;
+  right: 15px;
+  top: 54px;
+  border-radius: 3px;
+  box-shadow: 3px 3px 5px #e4e4e4;
+  padding: 10px 20px;
+  min-width: 110px;
+  max-width: 180px;
+}

@@ -7,53 +7,71 @@ import { EventBusService } from '@services/event-bus.service';
   templateUrl: './chatroom-list.component.html',
   styleUrls: ['./chatroom-list.component.css']
 })
-export class ChatroomListComponent implements OnInit, OnDestroy {
-  userLength: any = [{
-    name: '1',
-    id: 1,
-    checked: false
-  },{
-    name: '2',
-    id: 2,
-    checked: false
-  },{
-    name: '3',
-    id: 3,
-    checked: false
-  },{
-    name: '4',
-    id: 4,
-    checked: false
-  },{
-    name: '5',
-    id: 5,
-    checked: false
-  },{
-    name: '6',
-    id: 6,
-    checked: false
-  }];
+export class ChatroomListComponent implements OnInit {
+  allUserLength: any;
   
   choosedUser: any = [];
+  connection_userlist: any;
   connection_roommsg:any;
-  roomMessagesList: any = [];
+  roomList: any;
   constructor(private websocketService: WebsocketService,
-    private _eventBus: EventBusService) { }
-
+    private _eventBus: EventBusService) {
+      // this.websocketService.getLoadUserList();
+    }
+  
   ngOnInit() {
-    this.connection_roommsg = this.websocketService.getMessages().subscribe(message => {
-      const _messagelist:any = message;
-      this.roomMessagesList.push(_messagelist);
-      // this.msgScroll();
+    this.connection_roommsg = this.websocketService.getChatroomList_respond().subscribe(list => {
+      const _list:any = list;
+      this.roomList = _list.data;
+      console.log(_list)
+    })
+    this.connection_userlist = this.websocketService.getAllUserList_respond().subscribe(list => {
+      const _userlist:any = list;
+      this.allUserLength = _userlist;
     })
   }
+  
+  chooseUser_div: boolean = false;
+  thisRoomName: any;
+  showDialog: boolean =false;
+  thisCreateRoomData: any;
   /**
-   * 创建群聊
+   * creatChatRoomFn()
+   * 创建聊天室
    */
-  creatChatRoomFn(name) {
-    let nameObj = {"roomName": "临时会话"};
-    this.websocketService.chatroomCreate(nameObj);
-    alert('ok')
+  creatChatRoomFn() {
+    this.websocketService.getChatroomCreate_respond(this.thisRoomName).subscribe(data => {
+      const _data:any = data;
+      this.thisCreateRoomData = _data;
+    });
+    this.showDialog = false;
+    this.chooseUser_div = true;
+    this.chat_div = false;
+  }
+
+  /**
+   * 确定创建群聊
+   */
+  // sureCreatChatRoomFn() {
+  //   this.chooseUser_div = true;
+  // }
+  /**
+   * 确定已选择的用户参与群聊
+   */
+  chooseChatUserFn(roomId) {
+    const arrList = [];
+    this.choosedUser.forEach(item => {
+      arrList.push(item.userId);
+    });
+    let postObj = { "roomId": this.thisCreateRoomData.roomId, "userIds": arrList }
+    this.websocketService.chatroomAddUser(postObj);
+
+    this.websocketService.getChatroomList_respond().subscribe(list => {
+      const _list:any = list;
+      this.roomList = _list.data;
+      console.log(_list)
+      this.chooseUser_div = false;
+    })
   }
   /**
    * 选择群聊用户
@@ -80,10 +98,22 @@ export class ChatroomListComponent implements OnInit, OnDestroy {
     this.choosedUser.splice(index,1);
   }
 
+  chat_div:boolean = false;
+  targetSelectData: any;
   /**
-   * 组件注销
+   * 选择聊天室 发送聊天信息
    */
-  ngOnDestroy() {
-    this.connection_roommsg.unsubscribe();
-   }
+  toChatRoomFn(item) {
+    // let getObj = {"roomId": item.roomId};
+    let roomId = item.roomId;
+    this.websocketService.getChatroomInfo_respond(roomId).subscribe(data => {
+      const _roomInfo:any = data;
+      this.targetSelectData = _roomInfo.chatroom;
+      this.chat_div = true;
+    })
+  }
+  hasNewMsg:any = {};
+  getHasNewMsg(val) {
+    this.hasNewMsg = val;
+  }
 }

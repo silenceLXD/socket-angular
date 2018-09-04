@@ -21,18 +21,13 @@ export class AppComponent implements OnInit, OnDestroy {
   
   constructor(private websocketService: WebsocketService,
     private _eventBus: EventBusService) {
-
+      // this.websocketService.getCurrentUser();
   }
   
   ngOnInit(): void {
-    this.connection_curruser = this.websocketService.loadCurrentUser().subscribe(data => {
+    this.connection_curruser = this.websocketService.getCurrentUser_respond().subscribe(data => {
       const _data:any = data;
       this._eventBus.loginUserData.next(_data);
-    })
-    this.connection_userlist = this.websocketService.loadUserList().subscribe(list => {
-      const _userlist:any = list;
-      
-      this._eventBus.userListData.next(_userlist.data);
     })
   }
 
